@@ -3,22 +3,24 @@ const webpack = require("webpack");
 const path = require("path");
 
 module.exports = {
-    entry: path.join(__dirname, "public/javascripts", "app-client.js"),
+    entry: path.join(__dirname, "app.js"),
+    target: 'node',
     output: {
         path: path.join(__dirname, "public", "dist"),
-        filename: "bundle.js"
+        filename: "index.js"
     },
     module: {
-        loaders: [
+        rules: [
             {
-                test: path.join(__dirname, "public/javascripts"),
-                loader: ["babel-loader"]
+              test: /\.m?js$/,
+              exclude: /(node_modules|bower_components)/,
+              use: {
+                loader: 'babel-loader',
+                options: {
+                  presets: ['@babel/preset-env']
+                }
+              }
             }
-        ]
-    },
-    plugins: [
-        new webpack.DefinePlugin({
-            "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV)
-        })
-    ]
+          ]
+    }
 };

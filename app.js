@@ -3,7 +3,7 @@ import express from 'express';
 // React Components
 import React from 'react';
 import RDS from 'react-dom/server';
-import Avataaars from './avataaars';
+import Avataaars from 'avataaars';
 
 const app = express();
 
@@ -37,4 +37,8 @@ if (app.get('env') === 'development') {
   });
 }
 
-module.exports = app;
+app.set("port", process.env.PORT || 3006);
+
+var server = app.listen(app.get("port"), function() {
+    console.log("Express server listening on port " + server.address().port);
+});
